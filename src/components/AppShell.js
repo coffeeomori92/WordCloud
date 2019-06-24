@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Drawer from '@material-ui/core/Drawer';
@@ -30,6 +32,7 @@ class AppShell extends Component {
     render(){
         const { classes } = this.props;
         return (
+            <Fragment>
             <div className = {classes.root}>
                 <AppBar position = "static">
                     <IconButton className = {classes.menuButton} 
@@ -39,9 +42,21 @@ class AppShell extends Component {
                     </IconButton>
                 </AppBar>
                 <Drawer open = {this.state.toggle}>
-                    <MenuItem onClick = {this.handleDrawerToggle}>HOME</MenuItem>
+                    <MenuItem onClick = {this.handleDrawerToggle}>
+                        <Link component = {RouterLink} to = "/">Home</Link>
+                    </MenuItem>
+                    <MenuItem onClick = {this.handleDrawerToggle}>
+                        <Link component = {RouterLink} to = "/texts">Texts</Link>
+                    </MenuItem>
+                    <MenuItem onClick = {this.handleDrawerToggle}>
+                        <Link component = {RouterLink} to = "/words">Words</Link>
+                    </MenuItem>
                 </Drawer>
             </div>
+            <div id = "content" style = {{margin : 'auto', marginTop : '20px'}}>
+                {React.cloneElement(this.props.children)}
+            </div>
+            </Fragment>
         );
     }
 }
